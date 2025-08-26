@@ -11,6 +11,7 @@ from langchain_core.messages import HumanMessage, AIMessage, BaseMessage, System
 from langchain_core.tools import tool
 from langgraph.prebuilt import create_react_agent
 from langgraph_supervisor import create_supervisor
+from langgraph.checkpoint.memory import MemorySaver
 from src.config import LLM, SANDBOX_OUTPUT, ENV_FILE_PATH
 
 try:
@@ -85,13 +86,16 @@ def create_orchestrator_agent():
     # Get tools for this agent
     tools = get_mcp_tools(sandbox_mcp) + get_mcp_tools(filesystem_mcp) + [get_cwd]
     
+    # Create a memory checkpointer for state persistence
+    checkpointer = MemorySaver()
+    
     return create_supervisor(
         agents=[
         #    data_gen_agent
         ], model=LLM, tools=tools, prompt=prompt, 
         add_handoff_back_messages=True,
         output_mode="last_message",
-    ).compile(name="orchestrator")
+    ).compile(checkpointer=checkpointer)
 
 
 AGENT_DESCRIPTIONS = {
