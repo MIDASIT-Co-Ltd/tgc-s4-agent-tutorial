@@ -1,0 +1,18 @@
+[project]
+name = "agent-langgraph"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langgraph>=0.6.6",
+    "plotly>=6.3.0",
+    "langchain-mcp-adapters>=0.1.0",
+    "pandas>=2.0.0",
+    "langchain-core>=0.3.0",
+    "langchain-anthropic>=0.2.0",
+    "langchain-deepseek>=0.1.4",
+    "langgraph-supervisor>=0.0.29",
+    "smolagents>=1.21.2",
+    "mcp>=1.13.1",
+]
