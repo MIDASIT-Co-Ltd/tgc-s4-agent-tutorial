@@ -15,4 +15,7 @@ dependencies = [
     "langgraph-supervisor>=0.0.29",
     "smolagents>=1.21.2",
     "mcp>=1.13.1",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "copilotkit>=0.1.62",
 ]

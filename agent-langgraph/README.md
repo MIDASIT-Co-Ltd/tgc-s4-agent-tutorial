@@ -174,6 +174,28 @@ This tutorial system establishes several important concepts:
 
 
 
+## API Endpoint
+
+### CopilotKit Integration
+The project includes a FastAPI server (`endpoint.py`) that exposes the orchestrator agent through a CopilotKit-compatible API endpoint.
+
+**Prerequisites:**
+First, start the code execution MCP server:
+```bash
+uv run src/code_executor.py
+```
+
+**Starting the API Server:**
+```bash
+uv run src/endpoint.py
+```
+
+**Available Endpoints:**
+- `/copilotkit` - CopilotKit agent endpoint for UI integration
+- `/health` - Health check endpoint
+
+The server runs on port 8000 by default (configurable via `PORT` environment variable) and provides a bridge between the LangGraph agents and CopilotKit-powered frontend applications.
+
 ## Resources
 
 ### Langgraph Multi-Agent Example
