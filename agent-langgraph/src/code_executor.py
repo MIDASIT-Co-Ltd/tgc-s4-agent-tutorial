@@ -23,7 +23,6 @@ from src.config import SANDBOX_OUTPUT
 # Global state to maintain executor instance
 _executor: Optional[WasmExecutor] = None
 _logger: Optional[AgentLogger] = None
-_test: Optional[str] = None 
 # Create FastMCP server
 server = FastMCP("sandbox-code-executor", port=8001)
 
@@ -39,7 +38,7 @@ def initialize_code_executor(
     Returns:
         Status message indicating successful initialization
     """
-    global _executor, _logger, _test
+    global _executor, _logger
 
     _test = "test_val"
         
@@ -95,7 +94,7 @@ def run_python_code(code: str, output_filename: Optional[str] = None) -> str:
         Execution result with logs and optional file save confirmation
     """
     if _executor is None:
-        return f"Error: No executor initialized. Please call initialize_code_executor first. {_test}"
+        return "Error: No executor initialized. Please call initialize_code_executor first."
     
     try:
         if not code.strip():
