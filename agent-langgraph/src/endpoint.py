@@ -1,29 +1,39 @@
+# Ref. https://github.com/CopilotKit/coagents-starter-langgraph
+
 import os
-from fastapi import FastAPI
 import uvicorn
-from copilotkit import LangGraphAGUIAgent 
-from ag_ui_langgraph import add_langgraph_fastapi_endpoint 
+import logging
+from fastapi import FastAPI, Request
+from copilotkit import CopilotKitRemoteEndpoint, LangGraphAgent
+from copilotkit.integrations.fastapi import add_fastapi_endpoint
 from src.agent import orchestrator_agent
 
 from dotenv import load_dotenv
 load_dotenv()
 
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 app = FastAPI()
 
-add_langgraph_fastapi_endpoint(
-  app=app,
-  agent=LangGraphAGUIAgent(
-    name="orchestrator_agent",
-    description="Orchestrator agent for managing data visualization workflows and coordinating with specialized agents.",
-    graph=orchestrator_agent,
-  ),
-  path="/copilotkit",
+sdk = CopilotKitRemoteEndpoint(
+    agents=[
+        LangGraphAgent(
+            name="agent",
+            description="Orchestrator agent for managing data visualization workflows and coordinating with specialized agents.",
+            graph=orchestrator_agent,
+        )
+    ]
 )
+
+add_fastapi_endpoint(app, sdk, "/copilotkit")
 
 @app.get("/health")
 def health():
     """Health check endpoint."""
     return {"status": "ok"}
+
 
 def main():
     """Run the uvicorn server."""

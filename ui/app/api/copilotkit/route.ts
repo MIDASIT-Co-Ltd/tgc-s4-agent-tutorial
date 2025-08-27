@@ -1,6 +1,7 @@
+// Ref. https://github.com/CopilotKit/coagents-starter-langgraph
+
 import {
   CopilotRuntime,
-  LangGraphHttpAgent,
   ExperimentalEmptyAdapter,
   copilotRuntimeNextJSAppRouterEndpoint,
 } from "@copilotkit/runtime";
@@ -10,20 +11,29 @@ import { NextRequest } from "next/server";
 const serviceAdapter = new ExperimentalEmptyAdapter();
 
 const runtime = new CopilotRuntime({
-  agents: {
-    // Our FastAPI endpoint URL
-    'agent': new LangGraphHttpAgent({
-      url: "http://localhost:8007/copilotkit"
-    }),
-  },
+  remoteEndpoints: [
+    {
+      url: process.env.REMOTE_ACTION_URL || "http://localhost:8007/copilotkit",
+    },
+  ],
 });
 
 export const POST = async (req: NextRequest) => {
+  console.log("🚀 Next.js API Route called");
+  console.log("🚀 Request URL:", req.url);
+  
   const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({
     runtime,
     serviceAdapter,
     endpoint: "/api/copilotkit",
   });
 
-  return handleRequest(req);
+  try {
+    const response = await handleRequest(req);
+    console.log("✅ Next.js API Response status:", response.status);
+    return response;
+  } catch (error) {
+    console.error("❌ Next.js API Error:", error);
+    throw error;
+  }
 };
