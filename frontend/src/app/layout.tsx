@@ -25,6 +25,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const agentService = process.env.AGENT_SERVICE?.toLowerCase();
+  const agentName = process.env.AGENT_NAME;
+  
   return (
     <html lang="ko" suppressHydrationWarning>
       <body
@@ -32,7 +35,12 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Providers>
-          <CopilotKit runtimeUrl="/api/copilotkit">{children}</CopilotKit>
+          <CopilotKit 
+            runtimeUrl="/api/copilotkit"
+            {...(agentService === "langgraph" && agentName && { agent: agentName })}
+          >
+            {children}
+          </CopilotKit>
         </Providers>
       </body>
     </html>
