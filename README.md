@@ -25,13 +25,13 @@ The backend will be available at `http://localhost:8007` (configurable via `LANG
 ### 2. Frontend Setup (React UI)
 
 ```bash
-cd ui
+cd frontend
 
 # Install dependencies
-pnpm install
+yarn install
 
 # Start the development server
-pnpm dev
+yarn dev
 ```
 
 The frontend will be available at `http://localhost:3000`
@@ -97,25 +97,39 @@ The system will:
 - `uv run src/agent.py` - Run agent directly (for testing)
 
 ### Frontend Commands
-- `pnpm dev` - Start development server
-- `pnpm build` - Build for production
-- `pnpm start` - Start production server
+- `yarn dev` - Start development server
+- `yarn build` - Build for production
+- `yarn start` - Start production server
 
 ## Configuration
 
 ### Environment Variables
-No additional environment variables needed for basic setup. The system uses:
+
+Create a `.env` file in the `frontend` directory with the following variables:
+
+```
+AGENT_SERVICE=langgraph  # or openai
+AGENT_NAME=agent         # agent name when using langgraph
+OPENAI_API_KEY=your_key  # required when AGENT_SERVICE=openai
+```
+
+**Agent Service Configuration:**
+- When `AGENT_SERVICE=langgraph`: Frontend uses the agent service implemented in `agents-python/agent-langgraph`
+- When `AGENT_SERVICE=openai`: Frontend directly uses OpenAI API without agent service
+
+**System Endpoints:**
 - Backend: `http://localhost:8007` (configurable via `LANGGRAPH_ENDPOINT_PORT`)
 - Frontend: `http://localhost:3000`
 - MCP Server: `http://localhost:8001` (for sandbox execution)
 
 **Optional Configuration:**
 - `LANGGRAPH_ENDPOINT_PORT=8007` - Set custom port for the FastAPI server
+- `REMOTE_ACTION_URL` - Override default agent endpoint URL
 
 ### Customization
-- **Agent Instructions**: Modify system prompts in `agent-langgraph/src/system_prompts/`
-- **Chat Appearance**: Update CopilotPopup props in `ui/app/page.tsx`
-- **Styling**: Edit `ui/app/globals.css` for custom themes
+- **Agent Instructions**: Modify system prompts in `agents-python/agent-langgraph/src/system_prompts/`
+- **Chat Appearance**: Update CopilotPopup props in `frontend/src/app/page.tsx`
+- **Styling**: Edit `frontend/src/app/globals.css` for custom themes
 
 ## Technologies
 
@@ -138,5 +152,5 @@ This tutorial demonstrates:
 ---
 
 For detailed implementation information, see the README files in individual directories:
-- [Backend README](./agent-langgraph/README.md)
-- [Frontend package.json](./ui/package.json)
+- [Backend README](./agents-python/agent-langgraph/README.md)
+- [Frontend package.json](./frontend/package.json)
