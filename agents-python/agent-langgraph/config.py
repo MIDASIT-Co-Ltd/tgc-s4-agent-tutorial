@@ -3,17 +3,20 @@ from pathlib import Path
 from langchain_anthropic import ChatAnthropic
 from langchain_openai import ChatOpenAI
 from langchain_deepseek import ChatDeepSeek
+from dotenv import load_dotenv
 
-PROJECT_PATH = os.getenv("PROJECT_PATH")
-if not PROJECT_PATH:
-    PROJECT_PATH = str(Path(__file__).parent.parent.resolve())
-ENV_FILE_PATH = os.path.join(PROJECT_PATH, ".env")
-if not os.path.exists(ENV_FILE_PATH):
-    raise ValueError("Environment variable file not found")
+if not os.path.exists(".env"):
+    ENV_FILE_PATH = os.path.join(str(Path(__file__).parent.parent.resolve()), ".env")
+    if not os.path.exists(ENV_FILE_PATH):
+        raise ValueError("Environment variable file not found")
+else:
+    ENV_FILE_PATH = ".env"
 
-SANDBOX_OUTPUT = os.path.join(os.getenv("PROJECT_PATH", os.getcwd()), "sandbox_output")
-if not os.path.exists(SANDBOX_OUTPUT):
-    os.makedirs(SANDBOX_OUTPUT)
+load_dotenv(ENV_FILE_PATH)
+
+TEMP_DIR = os.getenv("TEMP_DIR", "tmp")
+if not os.path.exists(TEMP_DIR):
+    os.makedirs(TEMP_DIR)
 
 # LLM = ChatAnthropic(model="claude-sonnet-4-20250514")
 # LLM = ChatDeepSeek(model="deepseek-chat")

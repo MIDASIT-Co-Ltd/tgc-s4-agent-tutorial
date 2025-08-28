@@ -18,7 +18,9 @@ from smolagents.local_python_executor import LocalPythonExecutor
 from smolagents.remote_executors import WasmExecutor
 from smolagents.monitoring import AgentLogger
 
-from src.config import SANDBOX_OUTPUT
+TEMP_DIR = os.getenv("TEMP_DIR", "tmp")
+if not os.path.exists(TEMP_DIR):
+    os.makedirs(TEMP_DIR)
 
 # Global state to maintain executor instance
 _executor: Optional[WasmExecutor] = None
@@ -40,8 +42,6 @@ def initialize_code_executor(
     """
     global _executor, _logger
 
-    _test = "test_val"
-        
     try:
         # Create logger
         _logger = AgentLogger()
@@ -51,8 +51,8 @@ def initialize_code_executor(
         home_dir = os.getenv("HOME")
         deno_permissions = [
             "allow-net=0.0.0.0:8000,cdn.jsdelivr.net:443,pypi.org:443,files.pythonhosted.org:443,registry.npmjs.org:443",
-            f"allow-read={home_dir}/.cache,{home_dir}/Library/Caches,{SANDBOX_OUTPUT}",
-            f"allow-write={home_dir}/.cache,{home_dir}/Library/Caches,{SANDBOX_OUTPUT}",
+            f"allow-read={home_dir}/.cache,{home_dir}/Library/Caches,{TEMP_DIR}",
+            f"allow-write={home_dir}/.cache,{home_dir}/Library/Caches,{TEMP_DIR}",
         ]
         
         _executor = WasmExecutor(
@@ -63,7 +63,7 @@ def initialize_code_executor(
         )
         result_msg = f"WasmExecutor initialized successfully with timeout={timeout}s and sandbox permissions"
             
-        return f"{result_msg}\nSandbox output directory: {SANDBOX_OUTPUT}"
+        return f"{result_msg}\nSandbox output directory: {TEMP_DIR}"
         
     except Exception as e:
         error_msg = f"Failed to initialize executor: {str(e)}\n{traceback.format_exc()}"
@@ -88,7 +88,7 @@ def run_python_code(code: str, output_filename: Optional[str] = None) -> str:
     
     Args:
         code: Python code to execute in the sandbox
-        output_filename: Optional filename to save the execution result to the sandbox workspace. If provided, the result will be written to SANDBOX_OUTPUT directory.
+        output_filename: Optional filename to save the execution result to the sandbox workspace. If provided, the result will be written to TEMP_DIR directory.
     
     Returns:
         Execution result with logs and optional file save confirmation
@@ -129,7 +129,7 @@ def run_python_code(code: str, output_filename: Optional[str] = None) -> str:
         # Save to file if requested
         if output_filename:
             try:
-                output_path = os.path.join(SANDBOX_OUTPUT, output_filename)
+                output_path = os.path.join(TEMP_DIR, output_filename)
                 
                 # Determine file format based on extension
                 if output_filename.endswith('.json'):

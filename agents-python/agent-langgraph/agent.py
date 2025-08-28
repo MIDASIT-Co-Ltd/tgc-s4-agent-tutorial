@@ -12,7 +12,11 @@ from langchain_core.tools import tool
 from langgraph.prebuilt import create_react_agent
 from langgraph_supervisor import create_supervisor
 from langgraph.checkpoint.memory import MemorySaver
-from src.config import LLM, SANDBOX_OUTPUT, ENV_FILE_PATH
+from config import LLM
+
+TEMP_DIR = os.getenv("TEMP_DIR", "tmp")
+if not os.path.exists(TEMP_DIR):
+    os.makedirs(TEMP_DIR)
 
 try:
     from langchain_mcp_adapters.client import MultiServerMCPClient
@@ -36,7 +40,7 @@ filesystem_mcp = MultiServerMCPClient({
                 "args": [
                     "-y",
                     "@modelcontextprotocol/server-filesystem",
-                    str(SANDBOX_OUTPUT)  # Allow access to current directory
+                    str(TEMP_DIR)  # Allow access to current directory
                 ],
                 "transport": "stdio"
             }

@@ -6,7 +6,7 @@ import logging
 from fastapi import FastAPI, Request
 from copilotkit import CopilotKitRemoteEndpoint, LangGraphAgent
 from copilotkit.integrations.fastapi import add_fastapi_endpoint
-from src.agent import orchestrator_agent
+from agent import orchestrator_agent
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -39,7 +39,7 @@ def main():
     """Run the uvicorn server."""
     port = int(os.getenv("LANGGRAPH_ENDPOINT_PORT", "8007"))
     uvicorn.run(
-        "src.endpoint:app",
+        "endpoint:app",
         host="0.0.0.0",
         port=port,
         reload=True,
