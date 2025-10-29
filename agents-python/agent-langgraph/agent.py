@@ -2,9 +2,9 @@
 # https://docs.langchain.com/oss/python/models
 
 import os
-import pandas as pd
 from datetime import datetime, timedelta
-from typing import Dict, Any, TypedDict, List, Literal
+from typing import Dict, Any, TypedDict, List, Literal, Optional
+from uuid import UUID
 from pathlib import Path
 import json
 import asyncio
@@ -13,6 +13,7 @@ from langgraph.graph import MessagesState, StateGraph, START, END
 from langchain_core.messages import HumanMessage, AIMessage, BaseMessage, SystemMessage
 from langchain_core.tools import tool
 from langchain_core.language_models import BaseChatModel
+from langchain_core.callbacks import BaseCallbackHandler
 from langgraph.prebuilt import create_react_agent
 from langgraph_supervisor.supervisor import _make_call_agent
 from langgraph.checkpoint.memory import MemorySaver
@@ -64,7 +65,7 @@ filesystem_mcp = MultiServerMCPClient({
 
 def get_cwd():
     """Get current working directory."""
-    return str(SANDBOX_OUTPUT)
+    return str(TEMP_DIR)
 
 
 def get_mcp_tools(mcp_client):
@@ -95,6 +96,21 @@ def create_data_generation_agent():
 class AgentStateWithCopilkitProperties(AgentState):
     copilotkit: CopilotKitProperties
 
+class CustomCallbackHandler(BaseCallbackHandler):
+    def on_tool_start(
+        self,
+        serialized: dict[str, Any],
+        input_str: str,
+        *,
+        run_id: UUID,
+        parent_run_id: Optional[UUID] = None,
+        tags: Optional[list[str]] = None,
+        metadata: Optional[dict[str, Any]] = None,
+        inputs: Optional[dict[str, Any]] = None,
+        **kwargs: Any,
+    ):
+        print("test")
+        return None
 
 
 # Create the Orchestrator Agent  
@@ -127,6 +143,7 @@ def create_orchestrator_agent(agents, agent_name="orchestrator",  output_mode: L
         tools=tools,
         prompt=prompt,
         state_schema=state_schema,
+        interrupt_before={}
     )
 
     agent_names = set()

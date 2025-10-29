@@ -1,0 +1,15 @@
+[project]
+name = "agent-adk-simple"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ag-ui-adk>=0.3.1",
+    "google-adk>=1.17.0",
+    "litellm>=1.79.0",
+    "numpy>=2.3.4",
+    "pandas>=2.3.3",
+    "plotly>=6.3.1",
+    "smolagents>=1.22.0",
+]

@@ -1,0 +1,19 @@
+{
+    "folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "agents-python/agent-langgraph"
+		},
+		{
+			"path": "agents-python/code-executor"
+		},
+		{
+			"path": "agents-python/agent-pydantic-ai"
+		},
+		{
+			"path": "frontend"
+		}
+	]
+}

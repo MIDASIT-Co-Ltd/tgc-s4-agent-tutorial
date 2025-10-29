@@ -152,5 +152,6 @@ def run_python_code(code: str, output_filename: Optional[str] = None) -> str:
         return error_msg
 
 if __name__ == "__main__":
-    server.run("streamable-http")
+    # server.run("streamable-http")
+    server.run("stdio")
     initialize_code_executor(timeout=30)
