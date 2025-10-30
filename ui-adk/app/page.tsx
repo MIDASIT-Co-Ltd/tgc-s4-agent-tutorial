@@ -65,6 +65,7 @@ function TicTacToeBoard() {
   const [size, setSize] = useState<number>(3);
   const [boardText, setBoardText] = useState<string>("");
   const [lastClickedCell, setLastClickedCell] = useState<{row: number, col: number} | null>(null);
+  const [gameEndMessage, setGameEndMessage] = useState<string | null>(null);
   const { appendMessage, isLoading } = useCopilotChat();
 
   // Parse the board text or create an empty board
@@ -137,6 +138,30 @@ function TicTacToeBoard() {
     },
   });
 
+  // Register CopilotKit action for showing game end popup
+  useCopilotAction({
+    name: "show_game_end_popup",
+    description: "Show a popup message when the game ends. Call this when someone wins or the game is a draw. Use 'ai_won' when AI (X) wins, 'player_won' when the player (O) wins, or 'draw' for a tie.",
+    parameters: [
+      {
+        name: "result",
+        type: "string",
+        description: "The game result: 'ai_won' if AI wins, 'player_won' if player wins, or 'draw' for a tie.",
+        required: true,
+      },
+    ],
+    handler: async ({ result }) => {
+      if (result === "ai_won") {
+        setGameEndMessage("You lost! Try Again.");
+      } else if (result === "player_won") {
+        setGameEndMessage("You won!");
+      } else if (result === "draw") {
+        setGameEndMessage("It's a draw!");
+      }
+      return `Game end popup shown with result: ${result}`;
+    },
+  });
+
   // Handle confirm button click - send board text to chat
   const handleConfirm = () => {
     if (!isLoading) {
@@ -150,8 +175,35 @@ function TicTacToeBoard() {
     }
   };
 
+  // Handle clear button click - clear board
+  const handleClear = () => {
+    if (!isLoading) {
+      setBoardText("");
+      setLastClickedCell(null);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center gap-6 p-6">
+      {/* Game End Popup */}
+      {gameEndMessage && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-8 shadow-xl flex flex-col items-center gap-4">
+            <h2 className="text-3xl font-bold">{gameEndMessage}</h2>
+            <button
+              onClick={() => {
+                setGameEndMessage(null);
+                setBoardText("");
+                setLastClickedCell(null);
+              }}
+              className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col gap-2">
         <label htmlFor="board-size" className="font-semibold">
           Board Size:
@@ -217,18 +269,32 @@ function TicTacToeBoard() {
           ))}
         </div>
 
-        <button
-          type="button"
-          onClick={handleConfirm}
-          disabled={isLoading}
-          className={`absolute bottom-0 right-0 translate-y-full mt-4 px-6 py-2 font-semibold rounded-lg transition-colors ${
-            isLoading
-              ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
-              : 'bg-green-600 text-white hover:bg-green-700'
-          }`}
-        >
-          {isLoading ? "Please Wait..." : "Confirm"}
-        </button>
+        <div className="absolute bottom-0 right-0 translate-y-full mt-4 flex gap-2">
+          <button
+            type="button"
+            onClick={handleClear}
+            disabled={isLoading}
+            className={`px-6 py-2 font-semibold rounded-lg transition-colors ${
+              isLoading
+                ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+                : 'bg-red-600 text-white hover:bg-red-700'
+            }`}
+          >
+            Clear
+          </button>
+          <button
+            type="button"
+            onClick={handleConfirm}
+            disabled={isLoading}
+            className={`px-6 py-2 font-semibold rounded-lg transition-colors ${
+              isLoading
+                ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+                : 'bg-green-600 text-white hover:bg-green-700'
+            }`}
+          >
+            {isLoading ? "Please Wait..." : "Confirm"}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -236,15 +302,22 @@ function TicTacToeBoard() {
 
 export default function Home() {
   return (
-    <main className="min-h-screen p-8">
-      <h1 className="text-3xl font-bold mb-6">Tic-Tac-Toe</h1>
-      <TicTacToeBoard />
-      <CopilotChat
-        labels={{
-          title: "Popup Assistant",
-          initial: "Hi! I'm connected to an agent. How can I help?",
-        }}
-      />
+    <main className="min-h-screen flex flex-col">
+      <h1 className="text-3xl font-bold p-8 pb-4">Tic-Tac-Toe</h1>
+      <div className="flex flex-1 gap-4 px-8 pb-8">
+        <div className="flex-1">
+          <TicTacToeBoard />
+        </div>
+        <div className="flex-1">
+          <CopilotChat
+            labels={{
+              title: "Game Assistant",
+              initial: "Hi! I'm your opponent. Send me the board state to start playing!",
+            }}
+            className="h-full"
+          />
+        </div>
+      </div>
     </main>
   );
 }
