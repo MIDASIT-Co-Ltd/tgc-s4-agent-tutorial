@@ -7,7 +7,7 @@ Cursor 등 Python과 Node 개발용으로 이미 사용하고 있는 IDE가 있�
 [https://code.visualstudio.com/](https://code.visualstudio.com/)
 
 ### Python Extension 설치
-![[Pasted image 20251030101958.png]]
+![Python Extension](./20251030101958.png)
 
 
 ## git 환경 설정
