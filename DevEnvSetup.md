@@ -73,7 +73,7 @@ https://github.com/coreybutler/nvm-windows/releases 에서 nvm-setup.exe를 다�
 
 ### npm 설치
 ```shell
-nv install lts
+nvm install lts
 ```
 자신이 선호하는 버젼으로 설치해도 좋다.
 
