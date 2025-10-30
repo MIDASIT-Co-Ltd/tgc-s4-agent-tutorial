@@ -27,11 +27,33 @@
       }
     },
     {
-      "name": "Debug LangGraph Agent",
+      "name": "Debug ui-adk",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "dev"
+      ],
+      "cwd": "${workspaceFolder}/ui-adk",
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "serverReadyAction": {
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      }
+    },
+    {
+      "name": "Debug ADK Agent",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/agents-python/agent-langgraph/endpoint.py",
-      "cwd": "${workspaceFolder}/agents-python/agent-langgraph",
+      "program": "${workspaceFolder}/agents-python/agent-adk/agent_server_runner.py",
+      "cwd": "${workspaceFolder}/agents-python/agent-adk",
       "console": "integratedTerminal",
       "justMyCode": false
     },
@@ -49,9 +71,8 @@
     {
       "name": "Launch Full Stack",
       "configurations": [
-        "Debug Code Executor",
-        "Debug LangGraph Agent",
-        "Debug Next.js"
+        "Debug ADK Agent",
+        "Debug ui-adk"
       ]
     }
   ]

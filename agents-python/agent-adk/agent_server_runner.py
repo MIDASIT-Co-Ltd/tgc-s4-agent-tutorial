@@ -5,7 +5,7 @@ from agent.agent import root_agent
 
 ag_ui_adk_agent = ADKAgent(
     adk_agent=root_agent,
-    app_name="demo_app",
+    app_name="agents",
     user_id="demo_user",
     session_timeout_seconds=3600,
     use_in_memory_services=True

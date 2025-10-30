@@ -56,7 +56,20 @@ def create_orchestrator_agent(sub_agents, tools):
     )
     return orchestrator_agent
 
-data_gen_agent = create_data_generation_agent()
-filesystem_toolset = create_filesystem_toolset()
-code_executor_toolset = create_python_code_executor_toolset()
-root_agent = create_orchestrator_agent(sub_agents=[data_gen_agent], tools=[filesystem_toolset, code_executor_toolset])
+
+def create_tic_tac_toe_agent():
+    prompt_path = Path(__file__).parent / "system_prompts" / "tic_tac_toe_prompt.md"
+    prompt = prompt_path.read_text()
+    tic_tac_toe_agent = Agent(
+        model=llm,
+        name="tic_tac_toe_agent",
+        description="Agent that plays Tic-Tac-Toe with the user.",
+        instruction=prompt
+    )
+    return tic_tac_toe_agent
+
+# data_gen_agent = create_data_generation_agent()
+# filesystem_toolset = create_filesystem_toolset()
+# code_executor_toolset = create_python_code_executor_toolset()
+# root_agent = create_orchestrator_agent(sub_agents=[data_gen_agent], tools=[filesystem_toolset, code_executor_toolset])
+root_agent = create_tic_tac_toe_agent()

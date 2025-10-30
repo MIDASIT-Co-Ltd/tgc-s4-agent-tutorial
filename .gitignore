@@ -3,3 +3,4 @@ node_modules/
 **/.env
 sandbox_output/
 .next/
+.playwright-mcp/
