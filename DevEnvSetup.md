@@ -34,23 +34,30 @@ git@github.com:MIDASIT-Co-Ltd/tgc-s4-agent-tutorial.git
 ### uv 설치
 
 #### Mac OS
-```
+```shell
 brew install uv
 ```
 또는
-```
+```shell
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 #### Windows
-```
+```shell
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 #### pip
-```
+이미 파이썬이 설치 돼있는 경우에는 pip를 이용한 설치도 가능하다
+```shell
 pip install uv
 ```
 
 참고 https://docs.astral.sh/uv/getting-started/installation/
+
+### 특정 python 버젼 설치
+특정 python 버젼을 설쳐해야 할 경우 아래의 명렁어로 설치 할 수 있다. (python 3.12를 설치할 경우)
+```shell
+uv python isntall 3.12
+```
 
 ##  Node.js 환경 설정
 
