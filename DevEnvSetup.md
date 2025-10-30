@@ -104,3 +104,10 @@ agents-python/agent-adk 디렉토리에서 아래 명령어 실행
 ```bash
 source .venv/bin/activate
 ```
+
+
+## OpenAI API Key 추가
+agents-python/agent-adk/.env 파일 생성 후 아래와 같이 API Key 추가
+```env
+OPENAI_API_KEY=<공유받은 API Key>
+```
