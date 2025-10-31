@@ -71,5 +71,6 @@ def create_tic_tac_toe_agent():
 # data_gen_agent = create_data_generation_agent()
 # filesystem_toolset = create_filesystem_toolset()
 # code_executor_toolset = create_python_code_executor_toolset()
-# root_agent = create_orchestrator_agent(sub_agents=[data_gen_agent], tools=[filesystem_toolset, code_executor_toolset])
-root_agent = create_tic_tac_toe_agent()
+
+tic_tac_toe_agent = create_tic_tac_toe_agent()
+root_agent = create_orchestrator_agent(sub_agents=[tic_tac_toe_agent], tools=[])

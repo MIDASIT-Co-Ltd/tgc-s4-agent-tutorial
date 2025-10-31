@@ -1,14 +1,16 @@
 from fastapi import FastAPI
-from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
+from ag_ui_adk import add_adk_fastapi_endpoint
 from agent.agent import root_agent
+from extended_copilotkit_adk_agent import ExtendedCopilotKitADKAgent
 
 
-ag_ui_adk_agent = ADKAgent(
+ag_ui_adk_agent = ExtendedCopilotKitADKAgent(
     adk_agent=root_agent,
     app_name="agents",
     user_id="demo_user",
     session_timeout_seconds=3600,
-    use_in_memory_services=True
+    use_in_memory_services=True,
+    extend_frontend_actions_to_subagents=True
 )
 
 # Create FastAPI app
