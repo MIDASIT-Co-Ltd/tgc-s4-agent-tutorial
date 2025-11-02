@@ -50,6 +50,9 @@ export default function Home() {
                   <p className="text-xl text-gray-600 dark:text-gray-400">
                     Start by choosing your game on chat
                   </p>
+                  <p className="text-lg text-gray-500 dark:text-gray-500 mt-2 italic">
+                    e.g., &quot;Let&apos;s play tic-tac-toe&quot;
+                  </p>
                 </div>
 
                 {/* Available Games Section */}

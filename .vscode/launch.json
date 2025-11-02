@@ -2,31 +2,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python Debugger: Current File",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "${file}",
-      "console": "integratedTerminal",
-      "justMyCode": false
-    },
-    {
-      "name": "Debug Next.js",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/frontend/node_modules/next/dist/bin/next",
-      "args": [
-        "dev"
-      ],
-      "cwd": "${workspaceFolder}/frontend",
-      "console": "integratedTerminal",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "env": {
-        "NODE_ENV": "development"
-      }
-    },
-    {
       "name": "Debug ui-adk",
       "type": "node",
       "request": "launch",
@@ -54,15 +29,6 @@
       "request": "launch",
       "program": "${workspaceFolder}/agents-python/agent-adk/agent_server_runner.py",
       "cwd": "${workspaceFolder}/agents-python/agent-adk",
-      "console": "integratedTerminal",
-      "justMyCode": false
-    },
-    {
-      "name": "Debug Code Executor",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "${workspaceFolder}/agents-python/code-executor/code_executor.py",
-      "cwd": "${workspaceFolder}/agents-python/code-executor",
       "console": "integratedTerminal",
       "justMyCode": false
     }
