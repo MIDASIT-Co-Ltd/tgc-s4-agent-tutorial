@@ -221,20 +221,6 @@ export default function TicTacToeBoard() {
         />
       </div>
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="board-text" className="font-semibold">
-          Board Text (optional):
-        </label>
-        <textarea
-          id="board-text"
-          value={boardText}
-          onChange={(e) => setBoardText(e.target.value)}
-          placeholder={`Example:\n X | O | X\n-----------\n O | X | E\n-----------\n E | O | X`}
-          rows={6}
-          className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
-        />
-      </div>
-
       <div className="inline-block relative">
         <div
           className="grid border-2 border-gray-800"

@@ -32,17 +32,6 @@ def create_python_code_executor_toolset():
     return toolset
                 # Replace with actual server URL
 
-def create_data_generation_agent():
-    prompt_path = Path(__file__).parent / "system_prompts" / "data_generation_prompt.md"
-    prompt = prompt_path.read_text()
-    data_gen_agent = Agent(
-        model=llm,
-        name="data_generation_agent",
-        description="Agent that generates synthetic datasets based on user specifications for demonstration purposes.",
-        instruction=prompt
-    )
-    return data_gen_agent
-
 def create_orchestrator_agent(sub_agents, tools):
     prompt_path = Path(__file__).parent / "system_prompts" / "orchestrator_prompt.md"
     prompt = prompt_path.read_text()
@@ -68,7 +57,6 @@ def create_tic_tac_toe_agent():
     )
     return tic_tac_toe_agent
 
-# data_gen_agent = create_data_generation_agent()
 # filesystem_toolset = create_filesystem_toolset()
 # code_executor_toolset = create_python_code_executor_toolset()
 
