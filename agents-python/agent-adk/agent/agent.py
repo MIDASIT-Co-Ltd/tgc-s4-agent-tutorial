@@ -13,6 +13,9 @@ llm = LiteLlm(model=model_name, timeout=180, stream_options={"include_usage": Tr
 def get_weather_report(city: str) -> dict:
     """Retrieves the current weather report for a specified city.
 
+    Args:
+        city (str): The name of the city to get the weather report for.
+
     Returns:
         dict: A dictionary containing the weather information with a 'status' key ('success' or 'error') and a 'report' key with the weather details if successful, or an 'error_message' if an error occurred.
     """
