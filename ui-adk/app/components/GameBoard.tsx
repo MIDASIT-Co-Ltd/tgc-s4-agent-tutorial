@@ -15,10 +15,10 @@ export default function GameBoard({ game }: GameBoardProps) {
 
   return (
     <>
-      <div className="flex-1">
+      <div className="flex-1 min-h-[400px] lg:min-h-0">
         <GameComponent />
       </div>
-      <div className="flex-1">
+      <div className="flex-1 min-h-[500px] lg:min-h-0">
         <CopilotChat
           labels={{
             title: "Game Assistant",

@@ -34,23 +34,23 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col">
-      <div className="flex flex-1 gap-4 px-8 py-8">
+      <div className="flex flex-col lg:flex-row flex-1 gap-4 px-4 py-4 md:px-6 md:py-6 lg:px-8 lg:py-8">
         {currentGame ? (
           <GameBoard game={currentGame} />
         ) : (
           <>
             {/* Left Pane - Welcome Section */}
             <div className="flex-1 flex items-center justify-center">
-              <div className="w-full max-w-2xl px-8">
+              <div className="w-full max-w-2xl px-4 md:px-8">
                 {/* Welcome Header */}
-                <div className="text-center mb-12">
-                  <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <div className="text-center mb-8 md:mb-12">
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     Let&apos;s Play Games!
                   </h1>
-                  <p className="text-xl text-gray-600 dark:text-gray-400">
+                  <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400">
                     Start by choosing your game on chat
                   </p>
-                  <p className="text-lg text-gray-500 dark:text-gray-500 mt-2 italic">
+                  <p className="text-base md:text-lg text-gray-500 dark:text-gray-500 mt-2 italic">
                     e.g., &quot;Let&apos;s play tic-tac-toe&quot;
                   </p>
                 </div>
@@ -83,7 +83,7 @@ export default function Home() {
             </div>
 
             {/* Right Pane - Chat Interface */}
-            <div className="flex-1">
+            <div className="flex-1 min-h-[500px] lg:min-h-0">
               <CopilotChat
                 labels={{
                   title: "Game Assistant",
