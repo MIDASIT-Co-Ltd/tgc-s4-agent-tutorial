@@ -90,19 +90,23 @@ export default function TicTacToeBoard() {
   // Function for AI opponent - draws X, or cancels if clicking the most recent AI move
   // This function is exported via window object for external AI agents to use
   const clickGridCellByAI = useCallback((rowIndex: number, colIndex: number) => {
+    const currentBoard = boardText.trim()
+      ? parseBoardText(boardText)
+      : Array(size).fill(null).map(() => Array(size).fill("E"));
+    
     // Check if clicking the most recently clicked cell
     if (lastClickedCell?.row === rowIndex && lastClickedCell?.col === colIndex) {
       // Cancel the change - clear the cell
-      const updatedBoard = updateGridCell(board, rowIndex, colIndex, 'E');
+      const updatedBoard = updateGridCell(currentBoard, rowIndex, colIndex, 'E');
       setBoardText(boardToText(updatedBoard));
       setLastClickedCell(null);
     } else {
       // Add X to the clicked cell
-      const updatedBoard = updateGridCell(board, rowIndex, colIndex, 'X');
+      const updatedBoard = updateGridCell(currentBoard, rowIndex, colIndex, 'X');
       setBoardText(boardToText(updatedBoard));
       setLastClickedCell({row: rowIndex, col: colIndex});
     }
-  }, [board, lastClickedCell, setBoardText, setLastClickedCell]);
+  }, [boardText, size, lastClickedCell]);
 
   // Expose clickGridCellByAI to window for AI agent access
   useEffect(() => {
