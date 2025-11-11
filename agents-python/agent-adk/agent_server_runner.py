@@ -1,7 +1,24 @@
+import os
 from fastapi import FastAPI
 from ag_ui_adk import add_adk_fastapi_endpoint
 from agent.agent import root_agent
 from extended_copilotkit_adk_agent import ExtendedCopilotKitADKAgent
+
+
+if os.environ.get("USE_LANGFUSE", "true").lower() == "true":
+    from langfuse import get_client
+    langfuse = get_client()
+    
+    # Verify connection
+    if langfuse.auth_check():
+        print("Langfuse client is authenticated and ready!")
+    else:
+        print("Authentication failed. Please check your credentials and host.")
+
+
+    from openinference.instrumentation.google_adk import GoogleADKInstrumentor
+    
+    GoogleADKInstrumentor().instrument()
 
 
 ag_ui_adk_agent = ExtendedCopilotKitADKAgent(

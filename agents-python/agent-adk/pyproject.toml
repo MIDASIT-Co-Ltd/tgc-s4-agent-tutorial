@@ -6,9 +6,11 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "ag-ui-adk>=0.3.1",
-    "google-adk>=1.17.0",
+    "google-adk>=1.18.0",
+    "langfuse>=3.9.1",
     "litellm>=1.79.0",
     "numpy>=2.3.4",
+    "openinference-instrumentation-google-adk>=0.1.6",
     "pandas>=2.3.3",
     "plotly>=6.3.1",
     "smolagents>=1.22.0",
